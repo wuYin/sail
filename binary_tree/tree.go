@@ -71,6 +71,9 @@ func (tree *BinaryTree) PostOrderTraverse(node *Node, f func(int)) {
 // 中序遍历
 // 最顺其自然的遍历方式，left->parent->right
 func (tree *BinaryTree) InOrderTraverse(node *Node, f func(int)) {
+	if node == nil {
+		return
+	}
 	if node.left != nil {
 		tree.InOrderTraverse(node.left, f)
 	}
@@ -78,4 +81,24 @@ func (tree *BinaryTree) InOrderTraverse(node *Node, f func(int)) {
 	if node.right != nil {
 		tree.InOrderTraverse(node.right, f)
 	}
+}
+
+// 搜索
+// 有种有序数组二分查找元素的感觉
+func (tree *BinaryTree) Search(target int) (*Node) {
+	if tree.root == nil {
+		return nil
+	}
+	cur := tree.root
+	for cur != nil {
+		switch {
+		case cur.value > target:
+			cur = cur.left
+		case cur.value < target:
+			cur = cur.right
+		default:
+			return cur
+		}
+	}
+	return nil
 }

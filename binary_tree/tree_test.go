@@ -30,3 +30,8 @@ func TestPostOrderTraverse(t *testing.T) {
 func TestInOrderTraverse(t *testing.T) {
 	tree.InOrderTraverse(tree.root, f) // 1 2 3 4 5 6 7 8 9 10
 }
+
+func TestSearch(t *testing.T) {
+	fmt.Printf("%+v\n", tree.Search(9))  // &{value:9 left:<nil> right:0xc42000a1c0}
+	fmt.Printf("%+v\n", tree.Search(12)) // <nil>
+}
