@@ -108,10 +108,11 @@ func (tree *BinaryTree) BreadthFirstTraverse(f func(int)) {
 
 // 搜索
 // 有种有序数组二分查找元素的感觉
-func (tree *BinaryTree) Search(target int) (*Node) {
+func (tree *BinaryTree) Search(target int) *Node {
 	if tree.root == nil {
 		return nil
 	}
+
 	cur := tree.root
 	for cur != nil {
 		switch {
@@ -123,7 +124,24 @@ func (tree *BinaryTree) Search(target int) (*Node) {
 			return cur
 		}
 	}
+
 	return nil
+}
+
+// 来啊，递归啊
+func (tree *BinaryTree) CurSearch(node *Node, target int) *Node {
+	if node == nil {
+		return nil
+	}
+
+	switch {
+	case node.value < target:
+		return tree.CurSearch(node.right, target)
+	case node.value > target:
+		return tree.CurSearch(node.left, target)
+	default:
+		return node
+	}
 }
 
 // 计算树的深度
@@ -193,6 +211,25 @@ func (tree *BinaryTree) Same(node1 *Node, node2 *Node) bool {
 		return false
 	}
 	return node1.value == node2.value && tree.Same(node1.left, node2.left) && tree.Same(node1.right, node2.right)
+}
+
+// 遍历所有路径
+// 找寻所有叶子节点的过程
+func (tree *BinaryTree) AllPath(node *Node, stack []int, f func(int)) {
+	if node == nil {
+		return
+	}
+
+	stack = append(stack, node.value)
+	if node.left == nil && node.right == nil {
+		f(stack[len(stack)-1])
+		stack = stack[:len(stack)-1] // pop()
+		return
+	}
+
+	tree.AllPath(node.left, stack, f)
+	tree.AllPath(node.right, stack, f)
+	stack = stack[:len(stack)-1]
 }
 
 // 删除整棵树

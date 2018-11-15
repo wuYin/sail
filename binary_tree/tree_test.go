@@ -78,3 +78,12 @@ func TestFree(t *testing.T) {
 	tree.Free()
 	fmt.Printf("%+v\n", tree.root) // <nil>
 }
+
+func TestAllPath(t *testing.T) {
+	tree.AllPath(tree.root, nil, f)
+}
+
+func TestCurSearch(t *testing.T) {
+	fmt.Printf("%+v\n", tree.CurSearch(tree.root, 2))  // &{value:2 left:0xc42000a140 right:0xc42000a160}
+	fmt.Printf("%+v\n", tree.CurSearch(tree.root, 12)) // <nil>
+}
